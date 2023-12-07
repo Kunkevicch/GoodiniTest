@@ -39,7 +39,6 @@ namespace Goodini
 
         private void OnFirstBtnClicked()
         {
-            Debug.Log(_city.BuildingOne.transform.position);
             buildingChoosed?.Invoke(_city.BuildingOne.transform.position);
             _isControlled = true;
         }

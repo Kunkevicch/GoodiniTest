@@ -1,9 +1,8 @@
-using Cinemachine;
 using UnityEngine;
 
 namespace Goodini
 {
-    public class CameraController : MonoBehaviour
+    public class CameraController : MonoBehaviour, IInitable
     {
         [SerializeField]
         private float _angularSpeed;
@@ -15,16 +14,14 @@ namespace Goodini
         private Transform _cameraTargetView;
 
         private Vector3 _startPosition;
-        private Vector3 _startFollowOffset;
 
         private IServiceLocator<Service> _locator;
         private CityInput _cityInput;
 
         private bool _canControl;
 
-        private void Awake()
+        public void Init()
         {
-            
             CitySpawnerServiceLocator.locatorInited += OnLocatorInited;
             _startPosition = _cameraTargetView.position;
         }
@@ -44,20 +41,19 @@ namespace Goodini
         private void InitServices()
         {
             _cityInput = _locator.Get<CityInput>();
+            Debug.Log(_cityInput);
         }
 
         private void SubscribeOnInput()
         {
+            _cityInput.buildingChoosed += OnBuildingChoosed;
             _cityInput.joystickMoved += OnJoystickMoved;
             _cityInput.pointerMove += OnJoystickMoved;
-            _cityInput.buildingChoosed += OnBuildingChoosed;
             _cityInput.reseted += OnReseted;
-
         }
 
         private void OnJoystickMoved(Vector2 direction)
         {
-            Debug.Log(direction);
             MoveAndRotate(direction);
         }
 
