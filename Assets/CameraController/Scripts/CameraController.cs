@@ -41,14 +41,13 @@ namespace Goodini
         private void InitServices()
         {
             _cityInput = _locator.Get<CityInput>();
-            Debug.Log(_cityInput);
         }
 
         private void SubscribeOnInput()
         {
             _cityInput.buildingChoosed += OnBuildingChoosed;
             _cityInput.joystickMoved += OnJoystickMoved;
-            _cityInput.pointerMove += OnJoystickMoved;
+            _cityInput.pointerMoved += OnJoystickMoved;
             _cityInput.reseted += OnReseted;
         }
 
@@ -57,7 +56,7 @@ namespace Goodini
             MoveAndRotate(direction);
         }
 
-        private void MoveAndRotate(Vector3 direction)
+        private void MoveAndRotate(Vector2 direction)
         {
             if ( !_canControl ) return;
 

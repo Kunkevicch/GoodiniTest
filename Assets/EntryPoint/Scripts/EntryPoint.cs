@@ -5,10 +5,13 @@ namespace Goodini
     public class EntryPoint : MonoBehaviour
     {
         [SerializeField]
-        private CitySpawnerServiceLocator _citySpawnerServiceLocator;
+        private CameraController _cameraController;
 
         [SerializeField]
-        private CameraController _cameraController;
+        private CityUI _cityUI;
+
+        [SerializeField]
+        private CitySpawnerServiceLocator _citySpawnerServiceLocator;
 
         private void Awake()
         {

@@ -39,9 +39,5 @@ namespace Goodini
         private TouchPad _touchPad;
 
         public TouchPad TouchPad => _touchPad;
-
-        protected override void OnLocatorInited()
-        {
-        }
     }
 }

@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a8e7a9500338e4e97aa75eb2a29388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _angularSpeed: 50
   _buildingOne: {fileID: 6942183142673633619}
   _buildingTwo: {fileID: 4353773694824244510}
   _buildingThree: {fileID: 2190759938992646584}

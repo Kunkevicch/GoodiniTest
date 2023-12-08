@@ -9,11 +9,9 @@ namespace Goodini
 
         public event Action<Vector3> buildingChoosed;
 
-        public event Action<Vector2> pointerMove;
+        public event Action<Vector2> pointerMoved;
 
         public event Action reseted;
-
-        private bool _isControlled;
 
         private CityUI _cityUI;
         private Joystick _joystick;
@@ -40,49 +38,40 @@ namespace Goodini
         private void OnFirstBtnClicked()
         {
             buildingChoosed?.Invoke(_city.BuildingOne.transform.position);
-            _isControlled = true;
         }
 
         private void OnSecondBtnClicked()
         {
             buildingChoosed?.Invoke(_city.BuildingTwo.transform.position);
-            _isControlled = true;
         }
 
         private void OnThirdBtnClicked()
         {
             buildingChoosed?.Invoke(_city.BuildingThree.transform.position);
-            _isControlled = true;
         }
 
         private void OnFourthBtnClicked()
         {
             buildingChoosed?.Invoke(_city.BuildingFour.transform.position);
-            _isControlled = true;
         }
 
         private void OnResetBtnClicked()
         {
             reseted?.Invoke();
-            _isControlled = false;
         }
 
         private void OnPointerMove(Vector2 direction)
         {
-            if ( !_isControlled ) return;
-            pointerMove?.Invoke(direction);
+            pointerMoved?.Invoke(direction);
         }
 
         private void Update()
         {
             if ( _joystick == null ) return;
 
-            if ( _isControlled )
+            if ( _joystick.Horizontal != 0 || _joystick.Vertical != 0 )
             {
-                if ( _joystick.Horizontal != 0 || _joystick.Vertical != 0 )
-                {
-                    joystickMoved?.Invoke(_joystick.Direction);
-                }
+                joystickMoved?.Invoke(_joystick.Direction);
             }
         }
     }

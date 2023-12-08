@@ -244,6 +244,7 @@ MonoBehaviour:
   _buildingFourBTN: {fileID: 1386286529701255772}
   _resetBTN: {fileID: 4882642619794980200}
   _touchPad: {fileID: 8651623122969508759}
+  test: 
 --- !u!1 &1539570261098101059
 GameObject:
   m_ObjectHideFlags: 0
