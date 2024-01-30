@@ -5,64 +5,51 @@ namespace Goodini
 {
     public class CityInput : Service
     {
-        public event Action<Vector2> joystickMoved;
+        public event Action<Vector2> JoystickMoved;
 
-        public event Action<Vector3> buildingChoosed;
+        public event Action<Vector3> BuildingChoosed;
 
-        public event Action<Vector2> pointerMoved;
+        public event Action<Vector2> PointerMoved;
 
-        public event Action reseted;
+        public event Action Reseted;
 
         private CityUI _cityUI;
-        private Joystick _joystick;
-        private City _city;
 
-        protected override void OnLocatorInited()
+        private Joystick _joystick;
+
+        private void Awake()
         {
+            CitySpawnerServiceLocator.LocatorInited += OnLocatorInited;
+            ControlBtn.BuildingChoosed += OnBuildingChoosed;
+        }
+
+        protected void OnLocatorInited(IServiceLocator<Service> locator)
+        {
+            _locator = locator;
             _cityUI = _locator.Get<CityUI>();
             SubscribOnUI();
-            _city = _locator.Get<City>();
             _joystick = _cityUI.JoyStick;
         }
 
         private void SubscribOnUI()
         {
-            _cityUI.BuildingOneBTN.onClick.AddListener(OnFirstBtnClicked);
-            _cityUI.BuildingTwoBTN.onClick.AddListener(OnSecondBtnClicked);
-            _cityUI.BuildingThreeBTN.onClick.AddListener(OnThirdBtnClicked);
-            _cityUI.BuildingFourBTN.onClick.AddListener(OnFourthBtnClicked);
             _cityUI.ResetBTN.onClick.AddListener(OnResetBtnClicked);
             _cityUI.TouchPad.pointerMove += OnPointerMove;
         }
 
-        private void OnFirstBtnClicked()
+        private void OnBuildingChoosed(Vector3 buildingPosition)
         {
-            buildingChoosed?.Invoke(_city.BuildingOne.transform.position);
-        }
-
-        private void OnSecondBtnClicked()
-        {
-            buildingChoosed?.Invoke(_city.BuildingTwo.transform.position);
-        }
-
-        private void OnThirdBtnClicked()
-        {
-            buildingChoosed?.Invoke(_city.BuildingThree.transform.position);
-        }
-
-        private void OnFourthBtnClicked()
-        {
-            buildingChoosed?.Invoke(_city.BuildingFour.transform.position);
+            BuildingChoosed?.Invoke(buildingPosition);
         }
 
         private void OnResetBtnClicked()
         {
-            reseted?.Invoke();
+            Reseted?.Invoke();
         }
 
         private void OnPointerMove(Vector2 direction)
         {
-            pointerMoved?.Invoke(direction);
+            PointerMoved?.Invoke(direction);
         }
 
         private void Update()
@@ -71,7 +58,7 @@ namespace Goodini
 
             if ( _joystick.Horizontal != 0 || _joystick.Vertical != 0 )
             {
-                joystickMoved?.Invoke(_joystick.Direction);
+                JoystickMoved?.Invoke(_joystick.Direction);
             }
         }
     }

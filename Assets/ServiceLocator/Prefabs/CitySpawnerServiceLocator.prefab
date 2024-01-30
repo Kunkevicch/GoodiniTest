@@ -51,6 +51,3 @@ MonoBehaviour:
   - service: {fileID: -1469503014231353338, guid: 2611bf016b499ef41837ea6c501ba38b, type: 3}
     position: {x: 0, y: 0, z: 0}
     needToSpawn: 1
-  - service: {fileID: -7957062643631327179, guid: 5d0f79428fdd3d848910562534abec2e, type: 3}
-    position: {x: 50, y: 50, z: 50}
-    needToSpawn: 1

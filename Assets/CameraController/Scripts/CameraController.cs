@@ -1,8 +1,9 @@
+using Cinemachine;
 using UnityEngine;
 
 namespace Goodini
 {
-    public class CameraController : MonoBehaviour, IInitable
+    public class CameraController : Initable
     {
         [SerializeField]
         private float _angularSpeed;
@@ -17,12 +18,11 @@ namespace Goodini
 
         private IServiceLocator<Service> _locator;
         private CityInput _cityInput;
-
         private bool _canControl;
 
-        public void Init()
+        public override void Init()
         {
-            CitySpawnerServiceLocator.locatorInited += OnLocatorInited;
+            CitySpawnerServiceLocator.LocatorInited += OnLocatorInited;
             _startPosition = _cameraTargetView.position;
         }
 
@@ -45,10 +45,10 @@ namespace Goodini
 
         private void SubscribeOnInput()
         {
-            _cityInput.buildingChoosed += OnBuildingChoosed;
-            _cityInput.joystickMoved += OnJoystickMoved;
-            _cityInput.pointerMoved += OnJoystickMoved;
-            _cityInput.reseted += OnReseted;
+            _cityInput.BuildingChoosed += OnBuildingChoosed;
+            _cityInput.JoystickMoved += OnJoystickMoved;
+            _cityInput.PointerMoved += OnJoystickMoved;
+            _cityInput.Reseted += OnReseted;
         }
 
         private void OnJoystickMoved(Vector2 direction)
@@ -70,9 +70,9 @@ namespace Goodini
             }
             else
             {
-                Vector3 newDirection = new Vector3(0f, direction.y, 0f);
+                Vector3 newDirection = new(0f, direction.y, 0f);
 
-                _cameraTargetView.Translate(newDirection * _verticalSpeed * Time.deltaTime);
+                _cameraTargetView.Translate(_verticalSpeed * Time.deltaTime * newDirection);
             }
 
             float angle = direction.x * Time.deltaTime * _angularSpeed;
@@ -84,7 +84,7 @@ namespace Goodini
             _cameraTargetView.transform.position = buidlingPosition;
             _canControl = true;
         }
-    
+
         private void OnReseted()
         {
             _canControl = false;
@@ -93,8 +93,7 @@ namespace Goodini
 
         private void ResetView()
         {
-            _cameraTargetView.position = _startPosition;
-            _cameraTargetView.rotation = Quaternion.Euler(Vector3.zero);
+            _cameraTargetView.SetPositionAndRotation(_startPosition, Quaternion.Euler(Vector3.zero));
         }
     }
 }

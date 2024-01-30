@@ -8,8 +8,6 @@ namespace Goodini
     {
         private Dictionary<Type, T> _services { get; }
 
-        public event Action LocatorInited;
-
         public ServiceLocator()
         {
             _services = new Dictionary<Type, T>();
@@ -54,17 +52,10 @@ namespace Goodini
             return (TT)_services[type];
 
         }
-
-        public void CallInited()
-        {
-            LocatorInited?.Invoke();
-        }
     }
 
     public interface IServiceLocator<T>
     {
-        public event Action LocatorInited;
-        public void CallInited();
         TT Register<TT>(TT newService) where TT : T;
         void Unregister<TT>(TT service) where TT : T;
         TT Get<TT>() where TT : T;

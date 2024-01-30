@@ -9,28 +9,21 @@ namespace Goodini
         private float _angularSpeed;
 
         [SerializeField]
-        private Transform _buildingOne;
-        public Transform BuildingOne => _buildingOne;
-
-        [SerializeField]
-        private Transform _buildingTwo;
-        public Transform BuildingTwo => _buildingTwo;
-
-        [SerializeField]
-        private Transform _buildingThree;
-        public Transform BuildingThree => _buildingThree;
-
-        [SerializeField]
-        private Transform _buildingFour;
-        public Transform BuildingFour => _buildingFour;
+        private Transform[] _buildings;
+        public Transform[] Buildings => _buildings;
 
         private bool _canControl = true;
 
-
         private CityInput _cityInput;
 
-        protected override void OnLocatorInited()
+        private void Awake()
         {
+            CitySpawnerServiceLocator.LocatorInited += OnLocatorInited;
+        }
+
+        protected void OnLocatorInited(IServiceLocator<Service> locator)
+        {
+            _locator = locator;
             InitServices();
             SubscribeForInput();
         }
@@ -42,10 +35,10 @@ namespace Goodini
 
         private void SubscribeForInput()
         {
-            _cityInput.joystickMoved += OnMove;
-            _cityInput.pointerMoved += OnMove;
-            _cityInput.buildingChoosed += OnBuildingChoosed;
-            _cityInput.reseted += OnReseted;
+            _cityInput.JoystickMoved += OnMove;
+            _cityInput.PointerMoved += OnMove;
+            _cityInput.BuildingChoosed += OnBuildingChoosed;
+            _cityInput.Reseted += OnReseted;
         }
 
         private void OnMove(Vector2 direction)

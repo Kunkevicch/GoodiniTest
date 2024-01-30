@@ -5,23 +5,19 @@ namespace Goodini
     public class EntryPoint : MonoBehaviour
     {
         [SerializeField]
-        private CameraController _cameraController;
+        private Initable[] _initables;
 
-        [SerializeField]
-        private CityUI _cityUI;
-
-        [SerializeField]
-        private CitySpawnerServiceLocator _citySpawnerServiceLocator;
-
-        private void Awake()
+        private void Start()
         {
             InitSystems();
         }
 
         private void InitSystems()
         {
-            _cameraController.Init();
-            _citySpawnerServiceLocator.Init();
+            for(int i=0;i< _initables.Length;i++)
+            {
+                _initables[i].Init();
+            }
         }
     }
 }

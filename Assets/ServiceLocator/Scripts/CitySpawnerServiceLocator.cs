@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Goodini
 {
-    public class CitySpawnerServiceLocator : MonoBehaviour, IInitable
+    public class CitySpawnerServiceLocator : Initable
     {
-        public static event Action<IServiceLocator<Service>> locatorInited;
+        public static event Action<IServiceLocator<Service>> LocatorInited;
         
         private IServiceLocator<Service> _locator;
         public IServiceLocator<Service> Locator => _locator;
@@ -22,12 +22,11 @@ namespace Goodini
             public bool needToSpawn;
         }
 
-        public void Init()
+        public override void Init()
         {
             _locator = new ServiceLocator<Service>();
             SpawnRegisterServices();
-            _locator.CallInited();
-            locatorInited?.Invoke(_locator);
+            LocatorInited?.Invoke(_locator);
         }
 
         private void SpawnRegisterServices()
@@ -38,7 +37,6 @@ namespace Goodini
                 {
                     Service newService = Instantiate(service.service, service.position, Quaternion.identity);
                     _locator.Register(newService);
-                    newService.InitLocator(_locator);
                 }
                 else
                 {
@@ -46,10 +44,5 @@ namespace Goodini
                 }
             }
         }
-    }
-
-    public interface IInitable
-    {
-        public void Init();
     }
 }

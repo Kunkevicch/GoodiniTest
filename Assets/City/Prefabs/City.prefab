@@ -144,10 +144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _angularSpeed: 50
-  _buildingOne: {fileID: 6942183142673633619}
-  _buildingTwo: {fileID: 4353773694824244510}
-  _buildingThree: {fileID: 2190759938992646584}
-  _buildingFour: {fileID: 1925514461332764390}
+  _buildings:
+  - {fileID: 6942183142673633619}
+  - {fileID: 4353773694824244510}
+  - {fileID: 2190759938992646584}
+  - {fileID: 1925514461332764390}
 --- !u!1 &5632737956797738661
 GameObject:
   m_ObjectHideFlags: 0
